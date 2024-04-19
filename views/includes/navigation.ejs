@@ -1,0 +1,77 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+            </li>
+            <li class="main-header__item">
+                <a
+                    class="<%= path === '/products' ? 'active' : '' %>"
+                    href="/products"
+                    >Products</a
+                >
+            </li>
+            <% if(session.isLoggedIn){ %>
+            <li class="main-header__item">
+                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart"
+                    >Cart</a
+                >
+            </li>
+            <li class="main-header__item">
+                <a
+                    class="<%= path === '/orders' ? 'active' : '' %>"
+                    href="/orders"
+                    >Orders</a
+                >
+            </li>
+            <li class="main-header__item">
+                <a
+                    class="<%= path === '/admin/add-product' ? 'active' : '' %>"
+                    href="/admin/add-product"
+                    >Add Product
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a
+                    class="<%= path === '/admin/products' ? 'active' : '' %>"
+                    href="/admin/products"
+                    >Admin Products
+                </a>
+            </li>
+            <% } %>
+        </ul>
+        <ul class="main_header__item-List">
+            <% if(session.isLoggedIn){ %>
+            <li class="main-header__item">
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } else {%>
+            <li
+                class="main-header__item <%= path === '/login' ? 'active' : '' %>"
+            >
+                <a href="/login">Login</a>
+            </li>
+            <li
+                class="main-header__item <%= path === '/signup' ? 'active' : '' %>"
+            >
+                <a href="/signup">Signup</a>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+
+<% if(errorMessage){  %>
+    <div class="user-message user-message--error"><%= errorMessage  %></div>
+<% }%>
+
+<% if (typeof errorValidations !== "undefined") { %>
+    <% for (let error of errorValidations) { %>
+        <div class="user-message user-message--error"><%= error.msg  %></div>
+    <% }%>
+<% }%>
